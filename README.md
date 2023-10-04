@@ -20,9 +20,7 @@ $ pnpm run start
 
 # watch mode
 $ pnpm run start:dev
-
-
-
+```
 
 ## License
 
