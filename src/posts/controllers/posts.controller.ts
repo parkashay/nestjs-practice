@@ -1,47 +1,34 @@
-import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
-import { randomUUID } from 'crypto';
-import { Request, Response } from 'express';
-import posts from 'src/data/posts';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { PostDTO } from '../dtos/Post.dto';
+import { PostsService } from '../services/posts/posts.service';
 
 @Controller('posts')
 export class PostsController {
-  // get all posts or Get posts filtered by keywords passed as query
+  private postService = new PostsService();
   @Get()
   getPosts(@Query('keywords') keywords: string) {
-    if (keywords) {
-      const keywordsArray = keywords.split(','); // split the query string into array
+    return this.postService.getPosts(keywords);
+  }
 
-      // filter the posts according to the keywords
-      const filteredPosts = keywordsArray.map((keyword) => {
-        return posts.filter((post) => post.keywords.includes(keyword));
-      });
-      if (filteredPosts.length > 0) {
-        return filteredPosts;
-      } else {
-        return { result: 'none' };
-      }
-    }
-
-    // if no keywords are provided, return all posts
-    return posts;
+  // get a single post by slug
+  @Get(':slug')
+  getPostBySlug(@Param('slug') slug: string) {
+    return this.postService.getPostsBySlug(slug);
   }
 
   // Create a new post
   @Post('/create')
+  @UsePipes(new ValidationPipe())
   addPost(@Body() newPost: PostDTO) {
-    const id = randomUUID();
-    const title = newPost.title;
-    const keywords = newPost.keywords;
-    const content = newPost.content;
-    posts.push({
-      id,
-      title,
-      keywords,
-      content,
-    });
-    return {
-      newPost,
-    };
+    return this.postService.createNewPost(newPost);
   }
 }

@@ -4,6 +4,9 @@
 ++ get and post requests
 ++ get requests by route params
 ++ get requests by query params
+++ built in validation pipes
+++ providers
+++ Middlewares
 ```
 
 ## Installation

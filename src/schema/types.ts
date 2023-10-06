@@ -2,6 +2,7 @@
 export type Post = {
     id: string|number;
     title: string;
+    slug: string;
     keywords: string[];
     content: string;
 }
