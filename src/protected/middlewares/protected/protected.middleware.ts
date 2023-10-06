@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 
 @Injectable()
 export class ProtectedMiddleware implements NestMiddleware {
+  // pass this string as a authorization header while requesting for the data
   private authToken: string = 'Give Me Access';
   use(req: Request, res: Response, next: NextFunction) {
     const authToken = req.headers.authorization;
