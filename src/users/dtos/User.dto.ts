@@ -9,4 +9,7 @@ export class UserDTO {
 
     @IsNotEmpty() @MinLength(8)
     password: string;
+
+    @IsNotEmpty()
+    age: number;
 }
