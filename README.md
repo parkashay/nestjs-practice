@@ -7,6 +7,8 @@
 ++ built in validation pipes
 ++ providers
 ++ Middlewares
+++ Custom Pipes
+++ Guards
 ```
 
 ## Installation
