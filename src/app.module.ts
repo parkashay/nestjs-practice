@@ -1,14 +1,21 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { App } from './app.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { typeOrmConfig } from './typeorm.config';
 import { PostsModule } from './posts/posts.module';
-import { ProtectedModule } from './protected/protected/protected.module';
-import { ProtectedService } from './protected/services/protected/protected.service';
-
+import { PostsService } from './posts/posts.service';
 
 @Module({
-  imports: [UsersModule, PostsModule, ProtectedModule],
+  imports: [
+    TypeOrmModule.forRoot(typeOrmConfig),
+    UsersModule,
+    PostsModule,
+  ],
   controllers: [App],
-  providers: [ProtectedService],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
